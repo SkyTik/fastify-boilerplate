@@ -1,7 +1,7 @@
 import { FastifyMongodbOptions } from "@fastify/mongodb";
 
 const mongodbConfig: FastifyMongodbOptions = {
-  appName: "Onwheel Utils",
+  appName: "app name",
   maxIdleTimeMS: 30000,
   connectTimeoutMS: 10000,
   socketTimeoutMS: 10000,

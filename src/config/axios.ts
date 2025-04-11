@@ -20,7 +20,7 @@ function createAxiosInstance(options: CreateAxiosDefaults = {}) {
   const defaultOptions: CreateAxiosDefaults = {
     headers: {
       "Content-Type": "application/json",
-      "User-Agent": "Onwheel Utils",
+      "User-Agent": "app name",
     },
     httpAgent,
     httpsAgent,
