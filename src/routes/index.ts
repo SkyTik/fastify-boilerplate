@@ -1,20 +1,9 @@
-import { FastifyInstance, FastifyPluginAsync, FastifyRequest } from "fastify";
+import { FastifyInstance, FastifyPluginAsync } from "fastify";
 
-const routes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
-  fastify.get("/", async () => {
-    return { hello: "world" };
-  });
+import v1Routes from "./v1/index.js";
 
-  fastify.get("/hello/:name", async (request: FastifyRequest) => {
-    const { name } = request.params as { name: string };
-
-    // Assuming you have registered the Redis plugin with Fastify
-    const redis = fastify.redis;
-
-    // Save the name to Redis
-    await redis.set(`user:${name}`, name);
-    return { hello: name, saved: true };
-  });
+const routes: FastifyPluginAsync = async (fastify: FastifyInstance): Promise<void> => {
+  fastify.register(v1Routes, { prefix: "/v1" });
 };
 
 export default routes;

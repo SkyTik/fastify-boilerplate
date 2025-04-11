@@ -37,11 +37,21 @@
     "import/newline-after-import": "error",
     "import/no-duplicates": "error",
     "import/no-unresolved": "off",
-    "import/no-named-as-default": "off"
+    "import/no-named-as-default": "off",
+    "import/extensions": [
+      "error",
+      "always"
+    ]
   },
   "settings": {
     "import/resolver": {
-      "typescript": {}
+      "node": {
+        "extensions": [
+          ".js",
+          ".ts",
+          ".tsx"
+        ]
+      }
     }
   }
 }

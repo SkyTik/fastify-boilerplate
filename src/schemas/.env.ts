@@ -1,10 +1,12 @@
 const envSchema = {
   type: "object",
-  required: ["REDIS_HOST","REDIS_PORT"],
+  required: ["NODE_ENV", "REDIS_HOST", "REDIS_PASS", "MONGODB_URL"],
   properties: {
+    NODE_ENV: { type: "string", default: "" },
     REDIS_HOST: { type: "string", default: "localhost" },
-    REDIS_PORT: { type: "integer", default: 6379 },
-  }
-}
+    REDIS_PASS: { type: "string", default: "" },
+    MONGODB_URL: { type: "string" },
+  },
+};
 
-export default envSchema
+export default envSchema;
