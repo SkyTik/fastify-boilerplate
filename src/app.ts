@@ -92,7 +92,7 @@ const initApp = async (): Promise<FastifyInstance> => {
   // Register repositories
   app.register(autoload, {
     dir: join(__dirname, "helpers"),
-    // This pattern ignores any files that do not end with 'Repository.js' or 'Repository.ts'.
+    // This pattern ignores any files that do not end with 'Helper.js' or 'Helper.ts'.
     ignorePattern: /^(?!(.*Helper\.(js|ts)$)).*\.(js|ts)$$/,
   });
 

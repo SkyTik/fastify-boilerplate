@@ -1,6 +1,6 @@
 import { FastifyBaseLogger, FastifyInstance, FastifyPluginAsync } from "fastify";
 import fp from "fastify-plugin";
-import { IUserRepository } from "repositories/user.js";
+import { IUserRepository } from "repositories/userRepository.js";
 
 import { User } from "../types/user.js";
 
