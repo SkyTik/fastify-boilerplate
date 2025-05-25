@@ -10,6 +10,7 @@ import fastifyMultipart from "@fastify/multipart";
 import redisPlugin from "@fastify/redis";
 import { randomUUID } from "crypto";
 import { fastify, FastifyInstance, FastifyRequest } from "fastify";
+import fastifyGracefulShutdown from "fastify-graceful-shutdown";
 import fastifyHealthcheck from "fastify-healthcheck";
 
 import customLogger from "./config/logger.js";
@@ -74,6 +75,7 @@ const initApp = async (): Promise<FastifyInstance> => {
   app.register(fastifyHelmet);
   app.register(fastifyCors);
   app.register(fastifyHealthcheck);
+  app.register(fastifyGracefulShutdown);
 
   // Register plugins
   app.register(redisPlugin, {
@@ -149,17 +151,19 @@ const initApp = async (): Promise<FastifyInstance> => {
     reply.status(500).send({ message: "Something went wrong" });
   });
 
-  // Register graceful shutdown
-  // app.register(fastifyGracefulShutdown, { resetHandlersOnInit: true });
-  // app.after(() => {
-  //   app.gracefulShutdown(async () => {
-  //     app.log.info("Starting graceful shutdown");
-  //   });
-  // });
+  // Setup graceful shutdown with HTTP agent cleanup
+  app.after(() => {
+    app.gracefulShutdown(async (signal) => {
+      app.log.info(`Received signal to shutdown: ${signal}`);
+      app.log.info("Graceful shutdown completed");
+    });
+  });
 
-  app.log.info("RUN WITH ENV: ", app.config.NODE_ENV);
+  app.log.info(`RUN WITH ENV: ${app.config.NODE_ENV}`);
 
   await app.ready();
+
+  return app;
 
   return app;
 };
