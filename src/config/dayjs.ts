@@ -6,5 +6,3 @@ dayjs.extend(timezone);
 dayjs.extend(utc);
 
 dayjs.tz.setDefault("Asia/Ho_Chi_Minh");
-
-export default dayjs;
