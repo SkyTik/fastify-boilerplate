@@ -166,7 +166,5 @@ const initApp = async (): Promise<FastifyInstance> => {
   await app.ready();
 
   return app;
-
-  return app;
 };
 export default initApp;
