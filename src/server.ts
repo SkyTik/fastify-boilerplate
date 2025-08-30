@@ -2,7 +2,7 @@ import initApp from "./app.js";
 
 const app = await initApp();
 
-app.listen({ port: 8000, host: "0.0.0.0" }, (err: Error | null) => {
+app.listen({ port: 8000 }, (err: Error | null) => {
   if (err) {
     app.log.error(err);
     process.exit(1);
