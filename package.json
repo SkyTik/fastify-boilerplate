@@ -33,6 +33,7 @@
     "axios": "^1.8.4",
     "dayjs": "^1.11.13",
     "fastify": "^5.5.0",
+    "fastify-graceful-shutdown": "^5.0.0",
     "fastify-healthcheck": "^5.1.0",
     "fastify-plugin": "^5.0.1",
     "globals": "^16.3.0",

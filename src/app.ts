@@ -12,7 +12,7 @@ import fastifyMultipart from "@fastify/multipart";
 import redisPlugin from "@fastify/redis";
 import { randomUUID } from "crypto";
 import { fastify, FastifyInstance, FastifyRequest } from "fastify";
-// import fastifyGracefulShutdown from "fastify-graceful-shutdown";
+import fastifyGracefulShutdown from "fastify-graceful-shutdown";
 import fastifyHealthcheck from "fastify-healthcheck";
 
 import customLogger from "./config/logger.js";
@@ -77,7 +77,7 @@ const initApp = async (): Promise<FastifyInstance> => {
   app.register(fastifyHelmet);
   app.register(fastifyCors);
   app.register(fastifyHealthcheck);
-  // app.register(fastifyGracefulShutdown);
+  app.register(fastifyGracefulShutdown);
 
   // Register plugins
   app.register(redisPlugin, {
@@ -153,15 +153,14 @@ const initApp = async (): Promise<FastifyInstance> => {
     reply.status(500).send({ message: "Something went wrong" });
   });
 
-  // Setup graceful shutdown with HTTP agent cleanup
-  // app.after(() => {
-  //   app.gracefulShutdown(async (signal) => {
-  //     app.log.info(`Received signal to shutdown: ${signal}`);
-  //     app.log.info("Graceful shutdown completed");
-  //   });
-  // });
+  // Setup graceful shutdown
+  app.after(() => {
+    app.gracefulShutdown(async (signal: string) => {
+      app.log.info(`Received signal to shutdown: ${signal}`);
+    });
+  });
 
-  app.addHook("onClose", (instance, done) => {
+  app.addHook("onClose", (_instance, done) => {
     app.redis.quit();
     app.mongo.client.close();
     app.log.info("Server is closing");

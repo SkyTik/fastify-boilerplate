@@ -21,13 +21,3 @@ process.on("uncaughtException", (err) => {
   app.log.error(err);
   process.exit(1);
 });
-
-// Graceful shutdown
-const shutdown = () => {
-  app.close(() => {
-    process.exit(0);
-  });
-};
-
-process.on("SIGINT", shutdown);
-process.on("SIGTERM", shutdown);
