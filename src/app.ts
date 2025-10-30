@@ -69,6 +69,7 @@ const initApp = async (): Promise<FastifyInstance> => {
     logger: customLogger,
     disableRequestLogging: true,
     genReqId: () => randomUUID(),
+    ignoreTrailingSlash: true,
   });
 
   await validateEnv(app);
