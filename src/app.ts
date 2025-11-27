@@ -75,8 +75,13 @@ const initApp = async (): Promise<FastifyInstance> => {
   await validateEnv(app);
 
   // Register middlewares
-  app.register(fastifyHelmet);
-  app.register(fastifyCors);
+  app.register(fastifyHelmet, {
+    contentSecurityPolicy: false, // Not needed for JSON APIs
+  });
+  app.register(fastifyCors, {
+    origin: app.config.CORS_ORIGINS ? app.config.CORS_ORIGINS.split(",") : true,
+    credentials: true,
+  });
   app.register(fastifyHealthcheck);
   app.register(fastifyGracefulShutdown);
 
@@ -130,7 +135,7 @@ const initApp = async (): Promise<FastifyInstance> => {
   // Register routes
   app.register(routes);
 
-  app.addHook("onRequest", (req, reply, done) => {
+  app.addHook("onRequest", (req, _reply, done) => {
     if (req.routeOptions.url !== "/health" && process.env.NODE_ENV) {
       app.log.info(extractRequest(req));
     }
