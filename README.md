@@ -6,28 +6,36 @@ A modern backend service built with Fastify, TypeScript, and MongoDB.
 
 This boilerplate provides a well-structured foundation for building scalable and maintainable Node.js applications using Fastify. It includes essential configurations, patterns, and tools to help you get started quickly with best practices in mind.
 
+## Prerequisites
+
+- **Node.js**: >= 20.0.0
+- **pnpm**: 10.14.0 or later
+- **MongoDB**: Running instance
+- **Redis**: Running instance
+
 ## Features
 
-* **Fastify Framework**: Fast and low overhead web framework for Node.js
-* **TypeScript Support**: Type safety for better development experience
-* **MongoDB Integration**: Database connectivity with MongoDB
-* **Redis Support**: Caching and data storage with Redis
-* **API Versioning**: Built-in versioning structure for your APIs
-* **Security**: Helmet for security headers
-* **CORS Support**: Cross-origin resource sharing enabled
-* **Health Checks**: Endpoint for monitoring service health
-* **Graceful Shutdown**: Proper handling of application shutdown
-* **Docker Support**: Containerization ready
-* **Environment Configuration**: Structured environment variable management
-* **Error Handling**: Centralized error handling
-* **Request Logging**: Comprehensive request logging
+- **Fastify Framework**: Fast and low overhead web framework for Node.js
+- **TypeScript Support**: Type safety for better development experience
+- **MongoDB Integration**: Database connectivity with MongoDB
+- **Redis Support**: Caching and data storage with Redis
+- **API Versioning**: Built-in versioning structure for your APIs
+- **Security**: Helmet for security headers
+- **CORS Support**: Cross-origin resource sharing with configurable origins
+- **Health Checks**: `GET /health` endpoint for monitoring service health
+- **Graceful Shutdown**: Proper handling of application shutdown
+- **Docker Support**: Multi-stage build for optimized production images
+- **Environment Configuration**: Schema-validated environment variables
+- **Error Handling**: Centralized error handling
+- **Request Logging**: Comprehensive request logging with Pino
+- **Testing**: Jest with TypeScript support
 
 ## Project Structure
 
-```
+```text
 .
 ├── src/                  # Source code
-│   ├── config/           # Configuration files
+│   ├── config/           # Configuration files (mongodb, redis, logger, etc.)
 │   ├── controllers/      # Route controllers
 │   ├── middlewares/      # Custom middlewares
 │   ├── models/           # Database models
@@ -35,87 +43,141 @@ This boilerplate provides a well-structured foundation for building scalable and
 │   ├── repositories/     # Data access layer
 │   ├── routes/           # API routes
 │   │   └── v1/           # API version 1 routes
-│   ├── schemas/          # Validation schemas
+│   ├── schemas/          # Validation schemas (including .env schema)
 │   ├── services/         # Business logic
 │   ├── types/            # TypeScript type definitions
-│   ├── utils/            # Utility functions
 │   ├── app.ts            # Application setup
 │   └── server.ts         # Server entry point
 ├── test/                 # Test files
+│   ├── services/         # Service unit tests
+│   ├── utils/            # Test utilities
+│   ├── setup.ts          # Test setup
+│   └── app.test.ts       # Application tests
 ├── dist/                 # Compiled JavaScript output
-├── node_modules/         # Dependencies
-├── .env                  # Environment variables
 ├── .env.example          # Example environment variables
-├── .eslintrc.json        # ESLint configuration
+├── jest.config.js        # Jest configuration
 ├── tsconfig.json         # TypeScript configuration
-├── package.json          # Project metadata and dependencies
-└── Dockerfile            # Docker configuration
+├── Dockerfile            # Docker configuration
+└── package.json          # Project metadata and dependencies
 ```
 
 ## Getting Started
 
-To get started with the backend service, follow these steps:
+1. **Install dependencies**
 
-1. Install the necessary dependencies by running `pnpm install`.
-2. Set up your environment variables by copying `.env.example` to `.env` and updating the values.
-3. Run the application in development mode by running `pnpm run dev`.
-4. Build the application for production by running `pnpm run build`.
+   ```bash
+   pnpm install
+   ```
 
-## Environment Configuration
+2. **Configure environment**
 
-The backend service uses environment variables for configuration. Important variables include:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
 
-* `NODE_ENV`: The environment mode (development, production, test)
-* `REDIS_HOST`: The hostname or IP address of the Redis server
-* `REDIS_PASS`: The password for the Redis server
-* `MONGODB_URL`: The connection URL for MongoDB
+3. **Start development server**
 
-## Folder Purposes
+   ```bash
+   pnpm dev
+   ```
 
-* **config/**: Contains configuration for various components like MongoDB, Redis, and logging
-* **controllers/**: HTTP request handlers that invoke services and return responses
-* **middlewares/**: Custom middleware functions to process requests
-* **models/**: Data models and schemas for the database
-* **plugins/**: Fastify plugins for extending functionality
-* **repositories/**: Data access layer for interacting with databases
-* **routes/**: API route definitions organized by version
-* **schemas/**: JSON schemas for validating requests and responses
-* **services/**: Contains business logic and orchestrates multiple operations
-* **types/**: TypeScript type definitions and interfaces
-* **utils/**: Helper functions and utilities used throughout the application
+4. **Build for production**
 
-## Development Dependencies and Usage
+   ```bash
+   pnpm build
+   ```
 
-This project uses several development dependencies to enhance the development experience:
+## Environment Variables
 
-* **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript
-  * Usage: Provides type safety and modern JavaScript features
-  * Command: `pnpm run build` compiles TypeScript to JavaScript
-
-* **TSX**: A TypeScript execution engine and REPL for Node.js
-  * Usage: Runs TypeScript files directly without separate compilation step
-  * Command: `pnpm run dev` uses TSX to run and watch for changes
-
-* **ESLint**: A static code analysis tool for identifying problematic patterns
-  * Usage: Enforces code quality and consistency
-  * Configuration: `.eslintrc.json`
-  * Plugins:
-    * `@typescript-eslint/eslint-plugin`: TypeScript-specific linting rules
-    * `eslint-plugin-import`: Import/export syntax validation
-    * `eslint-plugin-prettier`: Runs Prettier as an ESLint rule
-    * `eslint-plugin-simple-import-sort`: Sorts import statements
-
-* **Prettier**: An opinionated code formatter
-  * Usage: Ensures consistent code formatting
-  * Works with ESLint via `eslint-config-prettier` and `eslint-plugin-prettier`
-
-* **Type Definitions**: TypeScript type definitions for libraries
-  * `@types/node`: TypeScript types for Node.js
-  * `@types/jsonwebtoken`: TypeScript types for JSON Web Tokens
-  * `@types/lodash`: TypeScript types for Lodash
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `NODE_ENV` | Yes | - | Environment mode (`development`, `production`, `test`) |
+| `PORT` | No | `8000` | Server port |
+| `MONGODB_URL` | Yes | - | MongoDB connection URL |
+| `REDIS_HOST` | Yes | `localhost` | Redis server hostname |
+| `REDIS_PASS` | Yes | - | Redis server password |
+| `CORS_ORIGINS` | No | - | Comma-separated list of allowed CORS origins |
 
 ## Scripts
 
-* `pnpm run dev`: Starts the development server with hot reloading
-* `pnpm run build`: Compiles TypeScript code to JavaScript in the dist directory
-* `pnpm test`: Runs the test suite (currently not configured)
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start development server with hot reloading |
+| `pnpm build` | Compile TypeScript to JavaScript |
+| `pnpm test` | Run test suite |
+| `pnpm test:watch` | Run tests in watch mode |
+| `pnpm test:coverage` | Run tests with coverage report |
+| `pnpm test:ci` | Run tests for CI/CD |
+| `pnpm lint` | Run ESLint |
+| `pnpm lint:fix` | Run ESLint with auto-fix |
+| `pnpm format` | Format code with Prettier |
+| `npx tsc --noEmit` | Type check without compilation |
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/health` | Health check endpoint |
+| GET | `/api/v1/users` | User routes (example) |
+
+## Docker
+
+### Build the image
+
+```bash
+docker build -t fastify-app .
+```
+
+### Run the container
+
+```bash
+docker run -p 8000:8000 \
+  -e NODE_ENV=production \
+  -e MONGODB_URL=mongodb://host.docker.internal:27017/mydb \
+  -e REDIS_HOST=host.docker.internal \
+  -e REDIS_PASS=yourpassword \
+  fastify-app
+```
+
+## Architecture
+
+This project follows a **layered architecture** pattern:
+
+```text
+Routes → Controllers → Services → Repositories → Models
+```
+
+- **Routes**: Define API endpoints and request validation
+- **Controllers**: Handle HTTP requests and responses
+- **Services**: Contain business logic
+- **Repositories**: Data access layer for database operations
+- **Models**: Database schemas and models
+
+### Autoload Conventions
+
+Files are auto-loaded based on naming patterns:
+
+- Services: `*Service.ts`
+- Repositories: `*Repository.ts`
+- Helpers: `*Helper.ts`
+
+### Import Convention
+
+This project uses ES modules. All imports must use `.js` extensions:
+
+```typescript
+import { userService } from './services/userService.js'
+```
+
+## Development Tools
+
+- **TypeScript**: Type safety and modern JavaScript features
+- **TSX**: Run TypeScript directly without compilation
+- **ESLint**: Code quality and consistency
+- **Prettier**: Code formatting
+- **Jest**: Testing framework with TypeScript support
+
+## License
+
+ISC
