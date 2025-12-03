@@ -11,7 +11,7 @@ import mongodbPlugin from "@fastify/mongodb";
 import fastifyMultipart from "@fastify/multipart";
 import redisPlugin from "@fastify/redis";
 import { randomUUID } from "crypto";
-import { fastify, FastifyInstance, FastifyRequest } from "fastify";
+import Fastify, { FastifyInstance, FastifyRequest } from "fastify";
 import fastifyGracefulShutdown from "fastify-graceful-shutdown";
 import fastifyHealthcheck from "fastify-healthcheck";
 
@@ -65,11 +65,13 @@ const initApp = async (): Promise<FastifyInstance> => {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
 
-  const app: FastifyInstance = fastify({
+  const app = Fastify({
     logger: customLogger,
     disableRequestLogging: true,
     genReqId: () => randomUUID(),
-    ignoreTrailingSlash: true,
+    routerOptions: {
+      ignoreTrailingSlash: true,
+    },
   });
 
   await validateEnv(app);
