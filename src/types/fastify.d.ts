@@ -1,9 +1,7 @@
 import { AxiosInstance } from "axios";
-import { Dayjs } from "dayjs";
 
 declare module "fastify" {
   interface FastifyInstance {
-    dayjs: () => Dayjs;
     config: {
       NODE_ENV: string;
       PORT: number;
