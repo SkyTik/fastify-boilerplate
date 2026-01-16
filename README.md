@@ -178,6 +178,26 @@ import { userService } from './services/userService.js'
 - **Prettier**: Code formatting
 - **Jest**: Testing framework with TypeScript support
 
+## Troubleshooting
+
+### FastifyError: fastify-plugin: Plugin did not start in time
+
+If you encounter this error, try the following steps:
+
+1. **Increase `pluginTimeout`**: In `src/app.ts`, increase the `pluginTimeout` value (default is 15 seconds). Example:
+
+   ```typescript
+   const app = Fastify({
+     // ...
+     pluginTimeout: 30000, // 30 seconds
+   });
+   ```
+
+2. **Check external service connections**: If increasing timeout doesn't help, verify that plugins connecting to external services (MongoDB, Redis) can reach their targets:
+   - Ensure MongoDB is running and `MONGODB_URL` is correct
+   - Ensure Redis is running and `REDIS_HOST`/`REDIS_PASS` are correct
+   - Check network connectivity and firewall rules
+
 ## License
 
 ISC

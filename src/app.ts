@@ -72,6 +72,7 @@ const initApp = async (): Promise<FastifyInstance> => {
     routerOptions: {
       ignoreTrailingSlash: true,
     },
+    pluginTimeout: 15000,
   });
 
   await validateEnv(app);
