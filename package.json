@@ -36,17 +36,12 @@
     "fastify-graceful-shutdown": "^5.0.0",
     "fastify-healthcheck": "^5.1.0",
     "fastify-plugin": "^5.1.0",
-    "globals": "^16.5.0",
-    "googleapis": "^144.0.0",
-    "jsonwebtoken": "^9.0.3",
-    "lodash": "^4.17.21"
+    "globals": "^17.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@jest/globals": "^30.2.0",
     "@types/jest": "^30.0.0",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/lodash": "^4.17.23",
     "@types/node": "^22.19.7",
     "@typescript-eslint/eslint-plugin": "^8.53.0",
     "@typescript-eslint/parser": "^8.53.0",
