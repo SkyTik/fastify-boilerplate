@@ -8,7 +8,7 @@ This boilerplate provides a well-structured foundation for building scalable and
 
 ## Prerequisites
 
-- **Node.js**: >= 20.0.0
+- **Node.js**: >= 22.0.0
 - **pnpm**: 10.14.0 or later
 - **MongoDB**: Running instance
 - **Redis**: Running instance
@@ -28,37 +28,54 @@ This boilerplate provides a well-structured foundation for building scalable and
 - **Environment Configuration**: Schema-validated environment variables
 - **Error Handling**: Centralized error handling
 - **Request Logging**: Comprehensive request logging with Pino
+- **Request ID Generation**: Auto-generated UUIDs for request tracking
+- **Axios HTTP Client**: Connection pooling with keep-alive agents
+- **Day.js Integration**: Date/time handling with timezone support (UTC, Asia/Ho_Chi_Minh)
+- **JWT Support**: Token-based authentication via jsonwebtoken
 - **Testing**: Jest with TypeScript support
 
 ## Project Structure
 
 ```text
 .
-├── src/                  # Source code
-│   ├── config/           # Configuration files (mongodb, redis, logger, etc.)
+├── src/
+│   ├── config/           # Configuration files
+│   │   ├── axios.ts      # Axios HTTP client config
+│   │   ├── dayjs.ts      # Day.js timezone config
+│   │   ├── logger.ts     # Pino logger config
+│   │   ├── mongodb.ts    # MongoDB connection config
+│   │   └── redis.ts      # Redis connection config
 │   ├── controllers/      # Route controllers
+│   ├── helpers/          # Helper functions (autoloaded *Helper.ts)
+│   ├── hooks/            # Fastify hooks
 │   ├── middlewares/      # Custom middlewares
 │   ├── models/           # Database models
 │   ├── plugins/          # Fastify plugins
+│   │   └── axios.ts      # Axios plugin
 │   ├── repositories/     # Data access layer
 │   ├── routes/           # API routes
 │   │   └── v1/           # API version 1 routes
 │   ├── schemas/          # Validation schemas (including .env schema)
 │   ├── services/         # Business logic
 │   ├── types/            # TypeScript type definitions
+│   ├── utils/            # Utility functions
 │   ├── app.ts            # Application setup
 │   └── server.ts         # Server entry point
-├── test/                 # Test files
+├── test/
+│   ├── integration/      # Integration tests
 │   ├── services/         # Service unit tests
 │   ├── utils/            # Test utilities
+│   ├── globalSetup.ts    # Jest global setup
+│   ├── globalTeardown.ts # Jest global teardown
 │   ├── setup.ts          # Test setup
 │   └── app.test.ts       # Application tests
 ├── dist/                 # Compiled JavaScript output
 ├── .env.example          # Example environment variables
+├── eslint.config.js      # ESLint configuration
 ├── jest.config.js        # Jest configuration
 ├── tsconfig.json         # TypeScript configuration
 ├── Dockerfile            # Docker configuration
-└── package.json          # Project metadata and dependencies
+└── package.json          # Project metadata
 ```
 
 ## Getting Started
@@ -119,7 +136,7 @@ This boilerplate provides a well-structured foundation for building scalable and
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/health` | Health check endpoint |
-| GET | `/api/v1/users` | User routes (example) |
+| GET | `/v1/users/:userId` | Get user by ID |
 
 ## Docker
 
