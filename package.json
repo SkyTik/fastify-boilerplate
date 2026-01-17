@@ -15,11 +15,11 @@
     "format": "prettier --write src/"
   },
   "keywords": [],
-  "author": "",
+  "author": "vunguyen",
   "license": "ISC",
   "type": "module",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.0.0"
   },
   "dependencies": {
     "@fastify/autoload": "^6.3.1",
