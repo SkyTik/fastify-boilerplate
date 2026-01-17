@@ -32,12 +32,9 @@ describe('UserService', () => {
       child: jest.fn().mockReturnThis(),
     } as any;
 
-    // Mock user repository
+    // Mock user repository - only methods defined in IUserRepository
     mockUserRepository = {
       getUser: jest.fn(),
-      createUser: jest.fn(),
-      updateUser: jest.fn(),
-      deleteUser: jest.fn(),
     } as jest.Mocked<IUserRepository>;
 
     userService = new UserService(mockLogger, mockUserRepository);

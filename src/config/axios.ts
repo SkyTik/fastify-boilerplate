@@ -1,6 +1,5 @@
 import Agent from "agentkeepalive";
 import axios, { CreateAxiosDefaults } from "axios";
-import _ from "lodash";
 
 const httpAgent = new Agent({
   maxSockets: 100,
@@ -26,7 +25,11 @@ function createAxiosInstance(options: CreateAxiosDefaults = {}) {
     httpsAgent,
   };
 
-  return axios.create(_.merge({}, defaultOptions, options));
+  return axios.create({
+    ...defaultOptions,
+    ...options,
+    headers: { ...defaultOptions.headers, ...options.headers },
+  });
 }
 
 export default createAxiosInstance;

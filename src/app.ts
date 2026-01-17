@@ -140,7 +140,8 @@ const initApp = async (): Promise<FastifyInstance> => {
 
   app.addHook("onRequest", (req, _reply, done) => {
     if (req.routeOptions.url !== "/health" && process.env.NODE_ENV) {
-      app.log.info(extractRequest(req));
+      req.requestLogData = extractRequest(req);
+      app.log.info(req.requestLogData);
     }
     done();
   });
@@ -148,7 +149,7 @@ const initApp = async (): Promise<FastifyInstance> => {
   app.addHook("onResponse", (req, reply, done) => {
     if (req.routeOptions.url !== "/health" && process.env.NODE_ENV) {
       app.log.info({
-        ...extractRequest(req),
+        ...req.requestLogData,
         status: reply.statusCode,
         request_time: reply.elapsedTime,
       });

@@ -1,5 +1,17 @@
 import { AxiosInstance } from "axios";
 
+interface RequestLogData {
+  request_id: string;
+  remote_ip: string;
+  host: string;
+  method: string;
+  uri: string | undefined;
+  user_agent: string | undefined;
+  query: string;
+  body: string;
+  params: string;
+}
+
 declare module "fastify" {
   interface FastifyInstance {
     config: {
@@ -13,5 +25,9 @@ declare module "fastify" {
     axios: {
       defaultClient: AxiosInstance;
     };
+  }
+
+  interface FastifyRequest {
+    requestLogData?: RequestLogData;
   }
 }
