@@ -15,9 +15,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `pnpm run test:ci`: Run tests for CI/CD (no watch, with coverage)
 
 ### Code Quality Commands
-- `pnpm run lint`: Run ESLint on source code
-- `pnpm run lint:fix`: Run ESLint and auto-fix issues
-- `pnpm run format`: Format code with Prettier
+- `pnpm run lint`: Run oxlint on source code
+- `pnpm run lint:fix`: Run oxlint and auto-fix issues
+- `pnpm run format`: Format code with oxfmt
+- `pnpm run format:check`: Check formatting without modifying files
 - `npx tsc --noEmit`: Type check without compilation
 
 ### Single Test Execution

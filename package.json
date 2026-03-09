@@ -10,9 +10,10 @@
     "test:ci": "jest --ci --coverage --watchAll=false",
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
-    "lint": "eslint src/",
-    "lint:fix": "eslint src/ --fix",
-    "format": "prettier --write src/"
+    "lint": "oxlint src/",
+    "lint:fix": "oxlint --fix src/",
+    "format": "oxfmt src/",
+    "format:check": "oxfmt --check src/"
   },
   "keywords": [],
   "author": "vunguyen",
@@ -35,24 +36,15 @@
     "fastify": "^5.7.1",
     "fastify-graceful-shutdown": "^5.0.0",
     "fastify-healthcheck": "^5.1.0",
-    "fastify-plugin": "^5.1.0",
-    "globals": "^17.0.0"
+    "fastify-plugin": "^5.1.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.2",
     "@jest/globals": "^30.2.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.19.7",
-    "@typescript-eslint/eslint-plugin": "^8.53.0",
-    "@typescript-eslint/parser": "^8.53.0",
-    "eslint": "^9.39.2",
-    "eslint-config-prettier": "^9.1.2",
-    "eslint-import-resolver-typescript": "^3.10.1",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-prettier": "^5.5.5",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
     "jest": "^30.2.0",
-    "prettier": "^3.8.0",
+    "oxfmt": "0.36.0",
+    "oxlint": "^1.51.0",
     "ts-jest": "^29.4.6",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"

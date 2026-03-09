@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "import"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "style": "off",
+    "pedantic": "off",
+    "perf": "warn",
+    "nursery": "off",
+    "restriction": "off"
+  },
+  "rules": {
+    "typescript/no-explicit-any": "warn",
+    "typescript/explicit-module-boundary-types": "off",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    "import/extensions": "off"
+  },
+  "ignorePatterns": ["dist/", "coverage/", "**/*.d.ts"]
+}
